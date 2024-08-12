@@ -15,7 +15,8 @@
             [ring.adapter.jetty :as jetty]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
-            [ring.middleware.params :refer [wrap-params]]))
+            [ring.middleware.params :refer [wrap-params]]
+            [clojure.data.json :as json]))
 
 (defonce server (atom nil))
 (defonce cfg (atom nil))
@@ -38,7 +39,7 @@
   (reset! server
           (jetty/run-jetty
            (fn [req] (log/info "request: " (:uri req)) (app req))
-           {:port 30011
+           {:port (:port @cfg)
             :join? false})))
 
 (defn stop-server []
@@ -52,7 +53,7 @@
   (start-server nil))
 
 (log/info "running from " (System/getProperty "user.dir"))
-(reset! cfg (map->Options (clojure.edn/read-string (slurp "./config"))))
+(reset! cfg (map->Options (json/read-str (slurp "./config") :key-fn #(keyword %))))
 (log/info "read config: " (with-out-str (pprint/pprint cfg)))
 
 (cond

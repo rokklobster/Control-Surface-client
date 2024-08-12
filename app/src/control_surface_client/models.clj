@@ -5,13 +5,15 @@
             pullInterval
             orchestratorUrl
             ownUrl
+            port
             ownName
-            userToken])
+            userToken
+            rootSpaceCommands])
 
 (defrecord ApiResponse
            [success
             message
-             payload])
+            payload])
 
 (defrecord TaskRunRequest
            [taskName

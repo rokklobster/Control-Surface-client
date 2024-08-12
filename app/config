@@ -1,4 +1,13 @@
-{:usePull false
- :ownUrl "http://localhost:30011"
- :ownName "test"
- :orchestratorUrl ""}
+{
+    "usePull": false,
+    "ownUrl": "http://localhost:30011",
+    "port": 30011,
+    "ownName": "test",
+    "orchestratorUrl": "",
+    "rootSpaceCommands": {
+        "systemctl": "systemctl",
+        "journalctl": "journalctl",
+        "nginx": "nginx",
+        "pg": "psql"
+    }
+}

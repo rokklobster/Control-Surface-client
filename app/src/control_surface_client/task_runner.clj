@@ -2,12 +2,22 @@
 
 ;; todo: storage for tasks
 (defonce tasks (atom {}))
+(defonce runtime (atom (Runtime/getRuntime)))
 
-(defn cancel-task [name] 
+;; todo: fetch pair, if some - kill the process
+(defn cancel-task [name]
   (reset! tasks (dissoc @tasks (keyword name)))
   true)
 
-(defn run-task [name type cmd cfg] 
+;; todo: 
+;;  + safety checks (run type is shell or one of predefined; no su/sudo in code)
+;;  call exec on runtime
+;;  create a thread/green thread to fetch data from outputs
+;;  create an on-close handler to kill the thread
+;;  save pair of process instance + fetcher thread
+(defn run-task [name type cmd cfg]
+;;   todo: drop old task
+;;   compose command array
   (reset! tasks (assoc @tasks (keyword name) type))
   true)
 
