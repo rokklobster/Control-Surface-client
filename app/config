@@ -1,0 +1,4 @@
+{:usePull false
+ :ownUrl "http://localhost:30011"
+ :ownName "test"
+ :orchestratorUrl ""}
