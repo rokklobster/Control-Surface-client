@@ -10,7 +10,8 @@
 
 (defrecord ApiResponse
            [success
-            message])
+            message
+             payload])
 
 (defrecord TaskRunRequest
            [taskName

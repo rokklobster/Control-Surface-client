@@ -11,4 +11,4 @@
   (reset! tasks (assoc @tasks (keyword name) type))
   true)
 
-(defn query-tasks [] (keys @tasks))
+(defn query-tasks [] (map str (keys @tasks)))

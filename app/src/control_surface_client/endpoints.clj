@@ -43,4 +43,4 @@
         (api-response 500 false "Failed to cancel task")))))
 
 (defn ep-query-tasks []
-  (tr/query-tasks))
+  (api-response 200 true "OK" (tr/query-tasks)))
