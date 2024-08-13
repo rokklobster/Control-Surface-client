@@ -1,9 +1,15 @@
 (ns control-surface-client.orchestrator-api
   (:require [control-surface-client.models :refer [->TaskOutput
                                                    ->SelfLogApi]]
-            [control-surface-client.util :refer [utc-now]]))
+            [control-surface-client.util :refer [utc-now]]
+            [clojure.data.json :as json]
+            [clj-http.client :as client]))
 
-(defn http-post-json [url body] nil) ;; todo: impl
+(defn http-post-json [url body] 
+  (let [b (json/write-str body)]
+    (client/post url
+                 {:body b
+                  :content-type :json})))
 
 (defn push-log [name text cfg]
   (let [r (->TaskOutput name (str (utc-now)) text)]

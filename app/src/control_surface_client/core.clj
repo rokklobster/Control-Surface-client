@@ -1,22 +1,23 @@
 (ns control-surface-client.core
-  (:require [clojure.edn]
+  (:require [clojure.data.json :as json]
+            [clojure.edn]
             [clojure.pprint :as pprint]
             [clojure.tools.logging :as log]
             [compojure.core :as comp]
             [compojure.route :as route]
             [control-surface-client.db :refer [ensure-db]]
-            [control-surface-client.endpoints :refer [ep-echo
-                                                      ep-receive-push
-                                                      ep-cancel-task
+            [control-surface-client.endpoints :refer [ep-cancel-task
+                                                      ep-echo
                                                       ep-query-tasks
+                                                      ep-receive-push
                                                       not-found]]
             [control-surface-client.models :refer [map->Options]]
+            [control-surface-client.task-runner :refer [tasks-startup]]
             [control-surface-client.validation :refer [valid-config?]]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
-            [ring.middleware.params :refer [wrap-params]]
-            [clojure.data.json :as json]))
+            [ring.middleware.params :refer [wrap-params]]))
 
 (defonce server (atom nil))
 (defonce cfg (atom nil))
@@ -52,10 +53,13 @@
   (stop-server)
   (start-server nil))
 
-(log/info "running from " (System/getProperty "user.dir"))
-(reset! cfg (map->Options (json/read-str (slurp "./config") :key-fn #(keyword %))))
-(log/info "read config: " (with-out-str (pprint/pprint cfg)))
-
-(cond
-  (valid-config? @cfg) (-> nil ensure-db start-server)
-  :else (log/error "Config is invalid, can't start server"))
+(defn -main [& args]
+  (log/info "running from " (System/getProperty "user.dir"))
+  (reset! cfg (map->Options (json/read-str (slurp "./config") :key-fn #(keyword %))))
+  (log/info "read config: " (with-out-str (pprint/pprint cfg)))
+  (cond
+    (valid-config? @cfg) (-> nil
+                             tasks-startup
+                             ensure-db
+                             start-server)
+    :else (log/error "Config is invalid, can't start server")))

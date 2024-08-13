@@ -1,9 +1,9 @@
 (ns control-surface-client.endpoints
   (:require [clojure.pprint :as pprint]
-            [control-surface-client.models :refer [map->TaskRunRequest
-                                                   map->TaskCancelRequest]]
-            [control-surface-client.util :refer [api-response]]
+            [control-surface-client.models :refer [map->TaskCancelRequest
+                                                   map->TaskRunRequest]]
             [control-surface-client.task-runner :as tr]
+            [control-surface-client.util :refer [api-response]]
             [control-surface-client.validation :refer [valid-run-request?]]
             [java-time.api :as jt]))
 
