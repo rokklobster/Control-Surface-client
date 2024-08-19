@@ -4,7 +4,7 @@
   <!-- You can override these with environment variables -->
   <property name="ENV" value="${ENV}"/>
   <property name="SERVICE" value="${SERVICE}"/>
-  <property name="ROOT_LOG_LEVEL" value="info"/>
+  <property name="ROOT_LOG_LEVEL" value="INFO"/>
   <property name="LOG_PATH" value="${LOG_PATH:-/app/${SERVICE}/logs}"/>
 
   <!-- STDOUT appender -->

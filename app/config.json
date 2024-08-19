@@ -1,0 +1,22 @@
+{
+    "usePull": false,
+    "ownUrl": "http://localhost:30011",
+    "port": 30011,
+    "ownName": "test",
+    "userToken": "7523119cf3d14ab09f66e52f559505ee",
+    "orchestratorUrl": "http://localhost:19477",
+    "rootSpaceCommands": {
+        "systemctl": [
+            "systemctl"
+        ],
+        "journalctl": [
+            "journalctl"
+        ],
+        "nginx": [
+            "nginx"
+        ],
+        "pg": [
+            "psql"
+        ]
+    }
+}
